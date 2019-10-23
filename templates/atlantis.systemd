@@ -1,0 +1,10 @@
+[Unit]
+Description=Atlantis Server
+After=network.target
+
+[Service]
+PIDFile=/var/run/atlantis
+ExecStart=/usr/local/bin/altantis --config /etc/atlantis/atlantis.yaml
+
+[Install]
+WantedBy=multi-user.target

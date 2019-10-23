@@ -1,0 +1,46 @@
+---
+# tasks file for stobias123.atlantis
+# Create systemd unit file
+
+- name: Install unzip
+  package:
+    name: unzip
+- name: Download atlantis
+  get_url:
+    url: https://github.com/runatlantis/atlantis/releases/download/v0.9.0/atlantis_linux_amd64.zip
+    dest: /tmp/
+- name: Unzip 
+  unarchive:
+    src: /tmp/atlantis_linux_amd64.zip
+    dest: /usr/local/bin/
+- name: Make Atlantis config dir
+  file:
+    state: directory
+    path: /etc/atlantis
+    owner: appadmin
+    group: appadmin
+
+- name: Create atlantis config
+  template:
+    src: atlantis.yml.j2
+    dest: /etc/atlantis/atlantis.yml
+    owner: appadmin
+    group: appadmin
+    mode: '0644'
+
+- name: Create systemd unit file
+  template: 
+    src: atlantis.service
+    dest: /etc/systemd/system/multi-user.target.wants/atlantis.service
+
+- name: enable and start the service
+  systemd:
+    state: enabled
+    daemon_reload: yes
+    name: atlantis
+    
+- name: enable and start the service
+  systemd:
+    state: start
+    daemon_reload: yes
+    name: atlantis  

@@ -1,0 +1,6 @@
+---
+# defaults file for stobias123.atlantis
+bitbucket-base-url: 
+bitbucket-user: svc-atlantis
+bitbucket-password:  
+bitbucket-webhook-secret: 
